@@ -5,9 +5,9 @@
 #include <QtQml>
 #include <QUrl>
 #include <QQuickStyle>
+#include <KLocalizedContext>
 
 int main(int argc, char *argv[]) {
-
     const QGuiApplication app(argc, argv);
 
     QApplication::setOrganizationName(QStringLiteral("KDE"));
@@ -20,7 +20,6 @@ int main(int argc, char *argv[]) {
         QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
     }
 
-
     QQmlApplicationEngine engine;
     QObject::connect(
         &engine,
@@ -30,6 +29,7 @@ int main(int argc, char *argv[]) {
         Qt::QueuedConnection
     );
 
+    engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.loadFromModule("com.github.olypolyu.nailnail", "Main");
     return app.exec();
 }
